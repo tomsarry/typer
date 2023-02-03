@@ -5,18 +5,19 @@
 	let userWordInput = '';
 	$: inputSize = userWordInput.length;
 	$: word = data.words[wordIndex];
+
+	$: if (data) {
+		userWordInput = '';
+		won = false;
+		wordIndex = 0;
+	}
+
 	let wordIndex = 0;
 	let won = false;
 
 	let start = undefined;
 	let end = undefined;
 	let time = undefined;
-
-	function handle_click() {
-		userWordInput = '';
-		won = false;
-		wordIndex = 0;
-	}
 
 	function eraseLast() {
 		userWordInput = userWordInput.slice(0, -1);
@@ -37,7 +38,7 @@
 		}
 
 		if (wordIndex == data.words.length) {
-			stopTimer()
+			stopTimer();
 			won = true;
 			resetTimer();
 		}
@@ -84,35 +85,51 @@
 
 <svelte:window on:keydown={keydown} />
 
-{#if won}
-	<p>won in {time}ms</p>
-{:else}
-	{wordIndex + 1} / {data.words.length}
-	<div class="word">
-		{#each word as letter, i}
-			{#if userWordInput.length == i}
-				<span class="bold">{letter}</span>
-			{:else if userWordInput.charAt(i) != word.charAt(i) && inputSize > i}
-				<span class="invalid">{letter}</span>
-			{:else}
-				{letter}
-			{/if}
-		{/each}
-	</div>
-{/if}
+<div class="typer">
+	{#if won}
+		<p>won in {time}ms</p>
+	{:else}
+		{wordIndex + 1} / {data.words.length}
+		<div class="word">
+			{#each word as letter, i}
+				{#if userWordInput.length == i}
+					<span class="letter bold">{letter}</span>
+				{:else if userWordInput.charAt(i) != word.charAt(i) && inputSize > i}
+					<span class="letter invalid">{letter}</span>
+				{:else}
+					<span class="letter">{letter}</span>
+				{/if}
+			{/each}
+		</div>
+	{/if}
 
-<form method="POST" action="?/reset" use:enhance>
-	<input type="hidden" name="reset" />
-	<button on:click={handle_click} data-key="reset" formaction="?/reset">reset</button>
-</form>
+	<form method="POST" action="?/reset" use:enhance>
+		<input type="hidden" name="reset" />
+		<button data-key="reset" formaction="?/reset">reset</button>
+	</form>
+</div>
 
 <style>
+	.typer {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 15%;
+	}
+
 	.word {
 		font-size: 4em;
+		letter-spacing: 0.05em;
+	}
+
+	.letter {
+		display: inline-block;
+		color: grey;
 	}
 
 	.bold {
-		font-weight: bold;
+		color: black;
 	}
 
 	.invalid {
