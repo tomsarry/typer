@@ -7,19 +7,6 @@ export function load() {
 }
 
 export const actions = {
-	update: async ({ request }) => {
-		const data = await request.formData();
-		console.log(data);
-		const key = data.get('key');
-
-		if (key === 'backspace') {
-			typer.erase();
-			return;
-		}
-
-		typer.add(key);
-	},
-
 	reset: async () => {
 		typer.reset();
 	}

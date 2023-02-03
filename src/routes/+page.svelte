@@ -8,6 +8,10 @@
 	let wordIndex = 0;
 	let won = false;
 
+	let start = undefined;
+	let end = undefined;
+	let time = undefined;
+
 	function handle_click() {
 		userWordInput = '';
 		won = false;
@@ -33,11 +37,30 @@
 		}
 
 		if (wordIndex == data.words.length) {
+			stopTimer()
 			won = true;
+			resetTimer();
 		}
 	}
 
+	function resetTimer() {
+		start = undefined;
+		end = undefined;
+	}
+
+	function stopTimer() {
+		end = performance.now();
+		time = end - start;
+	}
+
+	function startTimer() {
+		start = performance.now();
+		end = undefined;
+	}
+
 	function keydown(event) {
+		if (start === undefined) startTimer();
+
 		const key = event.key.toLowerCase();
 
 		if (key === 'backspace') {
@@ -62,11 +85,11 @@
 <svelte:window on:keydown={keydown} />
 
 {#if won}
-	<p>won</p>
+	<p>won in {time}ms</p>
 {:else}
 	{wordIndex + 1} / {data.words.length}
 	<div class="word">
-		{#each data.words[wordIndex] as letter, i}
+		{#each word as letter, i}
 			{#if userWordInput.length == i}
 				<span class="bold">{letter}</span>
 			{:else if userWordInput.charAt(i) != word.charAt(i) && inputSize > i}
