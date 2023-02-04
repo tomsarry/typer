@@ -1,3 +1,8 @@
+<svelte:head>
+	<title>BIP39 Typer | About</title>
+	<meta name="description" content="BIP39 Typer about page" />
+</svelte:head>
+
 <div class="about">
 	<h2>About</h2>
 

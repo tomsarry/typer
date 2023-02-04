@@ -6,7 +6,7 @@
 
 <div class="app">
 	<header>
-		<h1>bip39typer</h1>
+		<h1>BIP39 Typer</h1>
 		<nav>
 			<span aria-current={$page.url.pathname === '/' ? 'page' : undefined} class="nav-link"
 				><a href="/">typer</a></span

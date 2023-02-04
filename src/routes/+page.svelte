@@ -97,6 +97,11 @@
 
 <svelte:window on:keydown={keydown} />
 
+<svelte:head>
+	<title>BIP39 Typer</title>
+	<meta name="description" content="BIP39 Typer" />
+</svelte:head>
+
 <div class="typer">
 	{#if won}
 		<p class="finish" in:fly={{ duration: 150 }}>
