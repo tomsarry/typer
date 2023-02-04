@@ -2,22 +2,23 @@
 	import { enhance } from '$app/forms';
 	export let data;
 
-	let userWordInput = '';
-	$: inputSize = userWordInput.length;
-	$: word = data.words[wordIndex];
-
-	$: if (data) {
-		userWordInput = '';
-		won = false;
-		wordIndex = 0;
-	}
-
 	let wordIndex = 0;
 	let won = false;
 
 	let start = undefined;
 	let end = undefined;
 	let time = undefined;
+	let userWordInput = '';
+
+	$: inputSize = userWordInput.length;
+	$: word = data.words[wordIndex];
+	$: nextWords = data.words.slice(wordIndex+1, wordIndex+4);
+
+	$: if (data) {
+		userWordInput = '';
+		won = false;
+		wordIndex = 0;
+	}
 
 	function eraseLast() {
 		userWordInput = userWordInput.slice(0, -1);
@@ -101,6 +102,12 @@
 				{/if}
 			{/each}
 		</div>
+
+		<div class="next-words">
+			{#each nextWords as word, i}
+				<div class="next-word-{i}">{word}</div>
+			{/each}
+		</div>
 	{/if}
 
 	<form method="POST" action="?/reset" use:enhance>
@@ -134,5 +141,23 @@
 
 	.invalid {
 		color: red;
+	}
+
+	.next-words {
+		height: 200px;
+		text-align:center;
+	}
+
+	.next-word-0 {
+		font-size: 3em;
+		letter-spacing: 0.05em;
+	}
+
+	.next-word-1 {
+		font-size: 2.2em;
+	}
+
+	.next-word-2 {
+		font-size: 2em;
 	}
 </style>
