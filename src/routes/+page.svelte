@@ -1,5 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
+	import { fly } from 'svelte/transition';
+	import restart from '$lib/images/restart.svg';
 	export let data;
 
 	let wordIndex = 0;
@@ -18,6 +20,14 @@
 		userWordInput = '';
 		won = false;
 		wordIndex = 0;
+	}
+
+	let rot = 360;
+
+	function handle_rotate() {
+		let restartButton = document.getElementById("reset-btn");
+		restartButton.style = 'transform: rotate(' + rot + 'deg)';
+		rot += 360;
 	}
 
 	function eraseLast() {
@@ -89,7 +99,7 @@
 
 <div class="typer">
 	{#if won}
-		<p>won in {time}ms</p>
+		<p class="finish" in:fly={{ duration: 150 }}>Typed {data.words.length} words in {(time/1000).toFixed(2)}s</p>
 	{:else}
 		<div class="counter">
 			{wordIndex + 1} / {data.words.length}
@@ -115,8 +125,9 @@
 	{/if}
 
 	<form method="POST" action="?/reset" use:enhance>
-		<input type="hidden" name="reset" />
-		<button data-key="reset" formaction="?/reset">reset</button>
+		<button on:click={handle_rotate} id="reset-btn" class="reset" data-key="reset" formaction="?/reset">
+			<img src={restart} alt="restart button" />
+		</button>
 	</form>
 </div>
 
@@ -127,6 +138,38 @@
 		justify-content: center;
 		align-items: center;
 		margin-bottom: 150px;
+	}
+
+	.finish {
+		font-size: 2.5em;
+		color: #313131;
+	}
+
+	.reset {
+		height: 40px;
+		background: none;
+		color: inherit;
+		border: none;
+		padding: 0;
+		font: inherit;
+		cursor: pointer;
+		outline: inherit;
+		transition: opacity .2s ease;
+		transition: transform .4s ease-out;
+	}
+
+	.reset:hover {
+		opacity: 0.7;
+	}
+
+	img {
+		width: 40px;
+		height: 40px;
+		object-fit: contain;
+	}
+
+	.hidden {
+		display: none;
 	}
 
 	.word {
