@@ -19,6 +19,8 @@
 		flex-direction: column;
 		justify-content: space-between;
 		align-items: center;
+		background-color: #ebebeb;
+		color: #313131;
 	}
 
 	header {

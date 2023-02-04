@@ -12,7 +12,7 @@
 
 	$: inputSize = userWordInput.length;
 	$: word = data.words[wordIndex];
-	$: nextWords = data.words.slice(wordIndex+1, wordIndex+4);
+	$: nextWords = data.words.slice(wordIndex + 1, wordIndex + 4);
 
 	$: if (data) {
 		userWordInput = '';
@@ -91,11 +91,14 @@
 	{#if won}
 		<p>won in {time}ms</p>
 	{:else}
-		{wordIndex + 1} / {data.words.length}
+		<div class="counter">
+			{wordIndex + 1} / {data.words.length}
+		</div>
+
 		<div class="word">
 			{#each word as letter, i}
 				{#if userWordInput.length == i}
-					<span class="letter bold">{letter}</span>
+					<span class="letter active">{letter}</span>
 				{:else if userWordInput.charAt(i) != word.charAt(i) && inputSize > i}
 					<span class="letter invalid">{letter}</span>
 				{:else}
@@ -123,7 +126,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		margin-bottom: 15%;
+		margin-bottom: 150px;
 	}
 
 	.word {
@@ -133,29 +136,33 @@
 
 	.letter {
 		display: inline-block;
-		color: grey;
+		color: #808080;
 	}
 
-	.bold {
-		color: black;
+	.active {
+		color: #313131;
 	}
 
 	.invalid {
-		color: red;
+		color: rgb(216, 79, 79);
+	}
+
+	.counter {
+		font-size: 1.5em;
 	}
 
 	.next-words {
 		height: 200px;
-		text-align:center;
+		text-align: center;
+		color: #808080;
 	}
 
 	.next-word-0 {
 		font-size: 3em;
-		letter-spacing: 0.05em;
 	}
 
 	.next-word-1 {
-		font-size: 2.2em;
+		font-size: 2em;
 	}
 
 	.next-word-2 {
