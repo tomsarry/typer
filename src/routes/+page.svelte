@@ -25,7 +25,7 @@
 	let rot = 360;
 
 	function handle_rotate() {
-		let restartButton = document.getElementById("reset-btn");
+		let restartButton = document.getElementById('reset-btn');
 		restartButton.style = 'transform: rotate(' + rot + 'deg)';
 		rot += 360;
 	}
@@ -99,7 +99,9 @@
 
 <div class="typer">
 	{#if won}
-		<p class="finish" in:fly={{ duration: 150 }}>Typed {data.words.length} words in {(time/1000).toFixed(2)}s</p>
+		<p class="finish" in:fly={{ duration: 150 }}>
+			Typed {data.words.length} words in {(time / 1000).toFixed(2)}s
+		</p>
 	{:else}
 		<div class="counter">
 			{wordIndex + 1} / {data.words.length}
@@ -125,7 +127,13 @@
 	{/if}
 
 	<form method="POST" action="?/reset" use:enhance>
-		<button on:click={handle_rotate} id="reset-btn" class="reset" data-key="reset" formaction="?/reset">
+		<button
+			on:click={handle_rotate}
+			id="reset-btn"
+			class="reset"
+			data-key="reset"
+			formaction="?/reset"
+		>
 			<img src={restart} alt="restart button" />
 		</button>
 	</form>
@@ -150,12 +158,12 @@
 		background: none;
 		color: inherit;
 		border: none;
+		border-radius: 50%;
 		padding: 0;
 		font: inherit;
 		cursor: pointer;
-		outline: inherit;
-		transition: opacity .2s ease;
-		transition: transform .4s ease-out;
+		transition: opacity 0.2s ease;
+		transition: transform 0.4s ease-out;
 	}
 
 	.reset:hover {
@@ -202,13 +210,18 @@
 
 	.next-word-0 {
 		font-size: 3em;
+		line-height: 1em;
+		margin-bottom: 10px;
 	}
 
 	.next-word-1 {
-		font-size: 2em;
+		font-size: 2.3em;
+		line-height: 1em;
+		margin-bottom: 8px;
 	}
 
 	.next-word-2 {
-		font-size: 2em;
+		font-size: 1.8em;
+		line-height: 1em;
 	}
 </style>
