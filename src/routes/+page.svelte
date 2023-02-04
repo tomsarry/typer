@@ -162,8 +162,7 @@
 		padding: 0;
 		font: inherit;
 		cursor: pointer;
-		transition: opacity 0.2s ease;
-		transition: transform 0.4s ease-out;
+		transition: opacity 0.2s ease, transform 0.4s ease-out;
 	}
 
 	.reset:hover {

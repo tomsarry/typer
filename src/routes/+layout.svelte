@@ -1,6 +1,7 @@
 <script>
 	import './styles.css';
 	import { page } from '$app/stores';
+	import github from '$lib/images/github.svg';
 </script>
 
 <div class="app">
@@ -14,6 +15,15 @@
 				><a href="/about">about</a></span
 			>
 		</nav>
+
+		<a
+			href="https://github.com/tomsarry/typer"
+			rel="noopener noreferrer nofollow"
+			target="_blank"
+			class="github"
+		>
+			<img src={github} alt="github logo" />
+		</a>
 	</header>
 
 	<slot />
@@ -30,6 +40,31 @@
 		align-items: center;
 		background-color: #ebebeb;
 		color: #313131;
+	}
+
+	.github {
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		height: 40px;
+		background: none;
+		color: inherit;
+		border: none;
+		border-radius: 50%;
+		padding: 0;
+		font: inherit;
+		cursor: pointer;
+		transition: opacity 0.2s ease;
+	}
+
+	.github:hover {
+		opacity: 0.7;
+	}
+
+	img {
+		width: 40px;
+		height: 40px;
+		object-fit: contain;
 	}
 
 	h1 {

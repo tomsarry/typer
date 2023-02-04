@@ -9,7 +9,9 @@
 	</p>
 	<p>
 		For those of you that do not know, <a
-			href="https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki">BIP39</a
+			href="https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki"
+			rel="noopener noreferrer nofollow"
+			target="_blank">BIP39</a
 		>
 		is the <i>Bitcoin Improvement Proposal</i> that suggested we use a mnemonic code composed of english
 		words (the seed words) to have a more user-friendly way to generate deterministic wallets.
