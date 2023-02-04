@@ -29,7 +29,8 @@
 	}
 
 	function isChar(keyCode) {
-		return String.fromCharCode(keyCode).match(/(\w|\s)/g);
+		let key = String.fromCharCode(keyCode);
+		return key >= 'A' && key <= 'Z';
 	}
 
 	function check_word() {
@@ -70,7 +71,7 @@
 			return;
 		}
 
-		if (!isChar(event.keyCode) || key === 'enter') {
+		if (!isChar(event.keyCode)) {
 			return;
 		}
 
