@@ -4,8 +4,6 @@
 </svelte:head>
 
 <div class="about">
-	<h2>About</h2>
-
 	<p>
 		This website is a little toy project I made over the week-end. It was so cold out (-40 degrees
 		Celcius), I had to find something to keep me busy inside and so here it is: a <b
@@ -32,12 +30,8 @@
 </div>
 
 <style>
-	h2 {
-		text-align: center;
-	}
 	.about {
 		max-width: 600px;
-		min-height: 80vh;
 		text-align: justify;
 		display: flex;
 		flex-direction: column;
@@ -45,7 +39,7 @@
 		align-items: center;
 	}
 
-	a {
-		color: #313131;
+	p {
+		margin-bottom: 0;
 	}
 </style>

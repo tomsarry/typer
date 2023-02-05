@@ -1,3 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Alice&display=swap');
+
+:root {
+	--bg-color: #ebebeb;
+	--invalid-color: rgb(216, 79, 79);
+	--secondary-color: #dfdfdf;
+	--unfocused-color: #808080;
+	--text-color: #3e3e3e;
+	--font-size: 24px;
+	font-size: var(--font-size);
+	color: var(--text-color);
+	background-color: var(--bg-color);
+	font-family: 'Alice', serif;
+}
+
 body {
 	margin: 0;
+}
+
+a {
+	color: inherit;
 }

@@ -1,7 +1,11 @@
 <script>
 	import { enhance } from '$app/forms';
 	import { fly } from 'svelte/transition';
+
+	import Counter from './Counter.svelte';
+
 	import restart from '$lib/images/restart.svg';
+
 	export let data;
 
 	let wordIndex = 0;
@@ -108,9 +112,7 @@
 			Typed {data.words.length} words in {(time / 1000).toFixed(2)}s
 		</p>
 	{:else}
-		<div class="counter">
-			{wordIndex + 1} / {data.words.length}
-		</div>
+		<Counter current={wordIndex} total={data.words.length} />
 
 		<div class="word">
 			{#each word as letter, i}
@@ -139,7 +141,7 @@
 			data-key="reset"
 			formaction="?/reset"
 		>
-			<img src={restart} alt="restart button" />
+			<img src={restart} alt="reset button" />
 		</button>
 	</form>
 </div>
@@ -155,7 +157,7 @@
 
 	.finish {
 		font-size: 2.5em;
-		color: #313131;
+		color: var(--text-color);
 	}
 
 	.reset {
@@ -191,25 +193,21 @@
 
 	.letter {
 		display: inline-block;
-		color: #808080;
+		color: var(--unfocused-color);
 	}
 
 	.active {
-		color: #313131;
+		color: var(--text-color);
 	}
 
 	.invalid {
-		color: rgb(216, 79, 79);
-	}
-
-	.counter {
-		font-size: 1.5em;
+		color: var(--invalid-color);
 	}
 
 	.next-words {
 		height: 200px;
 		text-align: center;
-		color: #808080;
+		color: var(--unfocused-color);
 	}
 
 	.next-word-0 {
