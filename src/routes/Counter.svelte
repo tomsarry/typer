@@ -1,19 +1,37 @@
 <script>
+	import { tweened } from 'svelte/motion';
+	import { cubicOut } from 'svelte/easing';
+
+	const progress = tweened(0, {
+		duration: 200,
+		easing: cubicOut
+	});
+
+	$: {
+		progress.set(current / total);
+	}
+
 	export let current;
 	export let total;
 </script>
 
-<div class="counter">
-	{current + 1} / {total}
-</div>
+<progress value={$progress} />
 
 <style>
-	.counter {
-		background-color: var(--secondary-color);
-		font-weight: 400;
-		font-size: 1em;
-		padding: 6px 14px;
-		border-radius: 8px;
-		font-family: Arial, Helvetica, sans-serif;
+	progress {
+		display: inline-block;
+		background-color: var(--bg-color);
+		height: 5px;
+		border: 1px solid var(--text-color);
+		border-radius: 16px;
+		color: var(--text-color);
+		margin: 10px;
+	}
+
+	progress::-moz-progress-bar {
+		background: var(--text-color);
+	}
+	progress::-webkit-progress-value {
+		background: var(--text-color);
 	}
 </style>
