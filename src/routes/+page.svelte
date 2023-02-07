@@ -170,6 +170,10 @@
 		</form>
 	</div>
 
+	<form method="POST" action="?/add" use:enhance>
+		<button id="add-btn" name="time" formaction="?/add" value={time} class="hidden" />
+	</form>
+
 	{#if data.scores.length}
 		<div class="scores">
 			<span class="scores-title">Highscores</span>
