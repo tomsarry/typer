@@ -17,18 +17,23 @@
 	let userWordInput = '';
 
 	$: inputSize = userWordInput.length;
-	$: word = data.words[wordIndex];
-	$: nextWords = data.words.slice(wordIndex + 1, wordIndex + 4);
+	$: words = data.words.split(',');
+	$: word = words[wordIndex];
+	$: nextWords = words.slice(wordIndex + 1, wordIndex + 4);
 
-	$: if (data) {
+	let previousWords = '';
+
+	$: if (data.words != previousWords) {
 		userWordInput = '';
 		won = false;
 		wordIndex = 0;
+		previousWords = words;
+		resetTimer();
 	}
 
 	let rot = 360;
 
-	function handle_rotate() {
+	function handle_reset() {
 		let restartButton = document.getElementById('reset-btn');
 		restartButton.style = 'transform: rotate(' + rot + 'deg)';
 		rot += 360;
@@ -47,15 +52,21 @@
 		return key >= 'A' && key <= 'Z';
 	}
 
+	function saveTime() {
+		document.getElementById('add-btn').setAttribute('value', time);
+		document.getElementById('add-btn').click();
+	}
+
 	function check_word() {
-		if (userWordInput == data.words[wordIndex]) {
+		if (userWordInput == words[wordIndex]) {
 			wordIndex++;
 			userWordInput = '';
 		}
 
-		if (wordIndex == data.words.length) {
+		if (wordIndex == words.length) {
 			stopTimer();
 			won = true;
+			saveTime();
 			resetTimer();
 		}
 	}
@@ -106,44 +117,59 @@
 	<meta name="description" content="BIP39 Typer" />
 </svelte:head>
 
-<div class="typer">
-	{#if won}
-		<p class="finish" in:fly={{ duration: 150 }}>
-			Typed {data.words.length} words in {(time / 1000).toFixed(2)}s
-		</p>
-	{:else}
-		<Counter current={wordIndex} total={data.words.length} />
+<div class="content">
+	<div class="typer">
+		<Counter current={wordIndex} total={words.length} />
 
-		<div class="word">
-			{#each word as letter, i}
-				{#if userWordInput.length == i}
-					<span class="letter active">{letter}</span>
-				{:else if userWordInput.charAt(i) != word.charAt(i) && inputSize > i}
-					<span class="letter invalid">{letter}</span>
-				{:else}
-					<span class="letter">{letter}</span>
-				{/if}
-			{/each}
-		</div>
+		{#if won}
+			<p class="finish" in:fly={{ duration: 150 }}>
+				Typed {words.length} words in {(time / 1000).toFixed(2)}s
+			</p>
+		{:else}
+			<div class="word">
+				{#each word as letter, i}
+					{#if userWordInput.length == i}
+						<span class="letter active">{letter}</span>
+					{:else if userWordInput.charAt(i) != word.charAt(i) && inputSize > i}
+						<span class="letter invalid">{letter}</span>
+					{:else}
+						<span class="letter">{letter}</span>
+					{/if}
+				{/each}
+			</div>
 
-		<div class="next-words">
-			{#each nextWords as word, i}
-				<div class="next-word-{i}">{word}</div>
-			{/each}
+			<div class="next-words">
+				{#each nextWords as word, i}
+					<div class="next-word-{i}">{word}</div>
+				{/each}
+			</div>
+		{/if}
+
+		<form method="POST" action="?/reset" use:enhance>
+			<button on:click={handle_reset} id="reset-btn" class="reset" formaction="?/reset">
+				<img src={restart} alt="reset button" />
+			</button>
+		</form>
+
+		<form method="POST" action="?/add" use:enhance>
+			<button id="add-btn" name="time" formaction="?/add" value={time} class="hidden" />
+		</form>
+	</div>
+
+	{#if data.scores.length}
+		<div class="scores">
+			<span class="scores-title">Highscores</span>
+			<ul>
+				{#each data.scores as score}
+					<li class="score">{(score / 1000).toFixed(2)}s</li>
+				{/each}
+			</ul>
+
+			<form method="POST" action="?/delete" use:enhance>
+				<button name="time" formaction="?/delete" class="delete-btn"> reset </button>
+			</form>
 		</div>
 	{/if}
-
-	<form method="POST" action="?/reset" use:enhance>
-		<button
-			on:click={handle_rotate}
-			id="reset-btn"
-			class="reset"
-			data-key="reset"
-			formaction="?/reset"
-		>
-			<img src={restart} alt="reset button" />
-		</button>
-	</form>
 </div>
 
 <style>
@@ -158,6 +184,48 @@
 	.finish {
 		font-size: 2.5em;
 		color: var(--text-color);
+	}
+
+	.scores {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		right: 50px;
+		bottom: 50px;
+	}
+
+	.scores-title {
+		font-size: 1.2em;
+	}
+
+	ul {
+		padding: 0;
+		margin: 0;
+	}
+
+	li {
+		list-style: none;
+	}
+
+	.delete-btn {
+		background-color: var(--invalid-color);
+		color: var(--bg-color);
+		font-weight: 400;
+		height: 40px;
+		line-height: 40px;
+		font-size: 1.2em;
+		padding: 0px 16px;
+		font-family: inherit;
+		border: none;
+		border-radius: 8px;
+		transition: opacity 0.2s ease;
+		margin: 16px;
+		cursor: pointer;
+	}
+
+	.delete-btn:hover {
+		opacity: 0.9;
 	}
 
 	.reset {
