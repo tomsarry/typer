@@ -1,5 +1,5 @@
-function sortInt(a ,b) {
-  return parseInt(a) - parseInt(b);
+function sortInt(a, b) {
+	return parseInt(a) - parseInt(b);
 }
 
 export class Scores {

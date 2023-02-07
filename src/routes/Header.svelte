@@ -19,6 +19,7 @@
 		rel="noopener noreferrer nofollow"
 		target="_blank"
 		class="github"
+		title="Go to the project's repository"
 	>
 		<img src={github} alt="github logo" />
 	</a>

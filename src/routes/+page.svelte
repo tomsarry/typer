@@ -5,6 +5,7 @@
 	import Counter from './Counter.svelte';
 
 	import restart from '$lib/images/restart.svg';
+	import enter from '$lib/images/enter.svg';
 
 	export let data;
 
@@ -33,7 +34,7 @@
 
 	let rot = 360;
 
-	function handle_reset() {
+	function handle_rotate() {
 		let restartButton = document.getElementById('reset-btn');
 		restartButton.style = 'transform: rotate(' + rot + 'deg)';
 		rot += 360;
@@ -91,6 +92,11 @@
 
 		const key = event.key.toLowerCase();
 
+		if (key === 'enter') {
+			document.getElementById('reset-btn').click();
+			return;
+		}
+
 		if (key === 'backspace') {
 			eraseLast();
 			return;
@@ -146,13 +152,21 @@
 		{/if}
 
 		<form method="POST" action="?/reset" use:enhance>
-			<button on:click={handle_reset} id="reset-btn" class="reset" formaction="?/reset">
-				<img src={restart} alt="reset button" />
-			</button>
-		</form>
-
-		<form method="POST" action="?/add" use:enhance>
-			<button id="add-btn" name="time" formaction="?/add" value={time} class="hidden" />
+			<div class="reset-controls">
+				<button
+					on:click={handle_rotate}
+					id="reset-btn"
+					class="reset"
+					formaction="?/reset"
+					title="Click to restart"
+				>
+					<img src={restart} alt="reset button" />
+				</button>
+				<span class="separator" />
+				<div class="enter-div" title="Press Enter to restart">
+					<img src={enter} alt="enter key" />
+				</div>
+			</div>
 		</form>
 	</div>
 
@@ -160,13 +174,19 @@
 		<div class="scores">
 			<span class="scores-title">Highscores</span>
 			<ul>
-				{#each data.scores as score}
-					<li class="score">{(score / 1000).toFixed(2)}s</li>
+				{#each data.scores as score, i}
+					{#if i == 0}
+						<li class="score best">{(score / 1000).toFixed(2)}s</li>
+					{:else}
+						<li class="score">{(score / 1000).toFixed(2)}s</li>
+					{/if}
 				{/each}
 			</ul>
 
 			<form method="POST" action="?/delete" use:enhance>
-				<button name="time" formaction="?/delete" class="delete-btn"> reset </button>
+				<button name="time" formaction="?/delete" class="delete-btn" title="Reset highscores">
+					reset
+				</button>
 			</form>
 		</div>
 	{/if}
@@ -195,17 +215,35 @@
 		bottom: 50px;
 	}
 
+	.best {
+		font-size: 1.2em;
+		opacity: 1;
+	}
+
+	.best::after {
+		content: '🏆';
+		font-size: 0.8em;
+		margin-left: 8px;
+	}
+
 	.scores-title {
 		font-size: 1.2em;
+		margin-bottom: 4px;
+		text-decoration: underline;
 	}
 
 	ul {
 		padding: 0;
 		margin: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 	}
 
 	li {
 		list-style: none;
+		opacity: 0.8;
 	}
 
 	.delete-btn {
@@ -214,7 +252,7 @@
 		font-weight: 400;
 		height: 40px;
 		line-height: 40px;
-		font-size: 1.2em;
+		font-size: 1em;
 		padding: 0px 16px;
 		font-family: inherit;
 		border: none;
@@ -242,6 +280,35 @@
 
 	.reset:hover {
 		opacity: 0.7;
+	}
+
+	.reset-controls {
+		margin-top: 24px;
+		display: flex;
+	}
+
+	.separator {
+		width: 2px;
+		background-color: var(--secondary-color);
+		margin: 0px 14px 0px 10px;
+		border-radius: 8px;
+	}
+
+	.enter-div {
+		border: 2px solid var(--text-color);
+		border-radius: 4px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: var(--secondary-color);
+		width: 40px;
+		height: 40px;
+		box-sizing: border-box;
+	}
+
+	.enter-div img {
+		width: 30px;
+		height: 30px;
 	}
 
 	img {
