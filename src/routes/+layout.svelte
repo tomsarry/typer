@@ -35,6 +35,7 @@
 
 	.mobile {
 		display: none;
+		text-align: center;
 	}
 
 	@media (max-width: 700px) {
