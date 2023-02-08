@@ -4,6 +4,10 @@
 	import Footer from './Footer.svelte';
 </script>
 
+<div class="mobile">
+	<p>Please open on a computer for the best experience.</p>
+</div>
+
 <div class="app">
 	<Header />
 
@@ -27,5 +31,23 @@
 
 	.content {
 		flex-grow: 1;
+	}
+
+	.mobile {
+		display: none;
+	}
+
+	@media (max-width: 700px) {
+		.app {
+			display: none;
+		}
+
+		.mobile {
+			flex-grow: 1;
+			min-height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 	}
 </style>
