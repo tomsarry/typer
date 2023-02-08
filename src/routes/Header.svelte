@@ -12,6 +12,9 @@
 		<span aria-current={$page.url.pathname === '/about' ? 'page' : undefined} class="nav-link"
 			><a href="/about">about</a></span
 		>
+		<span aria-current={$page.url.pathname === '/donate' ? 'page' : undefined} class="nav-link"
+			><a href="/donate">donate</a></span
+		>
 	</nav>
 
 	<a

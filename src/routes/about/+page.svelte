@@ -31,7 +31,6 @@
 
 <style>
 	.about {
-		max-width: 600px;
 		text-align: justify;
 		display: flex;
 		flex-direction: column;

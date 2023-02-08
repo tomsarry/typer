@@ -15,6 +15,8 @@
 <style>
 	.app {
 		min-height: 100vh;
+		max-width: 600px;
+		margin: auto;
 		display: flex;
 		flex-direction: column;
 		align-items: center;

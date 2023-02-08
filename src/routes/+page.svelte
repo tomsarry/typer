@@ -207,6 +207,7 @@
 
 	.finish {
 		font-size: 2.5em;
+		text-align: center;
 		color: var(--text-color);
 	}
 
