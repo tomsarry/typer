@@ -25,7 +25,8 @@
 		are sufficient to uniquely determine a word and where pairs of similar words are avoided (woman
 		vs women for example). If you're wondering what these words are, simply start <a href="/"
 			>typing</a
-		>!
+		>, or look through <a href="/words">them</a> (you can verify that any 4 letter combination yields
+		at most one word 😉)!
 	</p>
 </div>
 
