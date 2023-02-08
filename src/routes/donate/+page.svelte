@@ -13,4 +13,8 @@
 		font-size: 0.9em;
 		font-family: 'Courier New', Courier, monospace;
 	}
+
+	p {
+		margin-top: 0px;
+	}
 </style>

@@ -8,7 +8,6 @@
 
 <style>
 	footer {
-		position: absolute;
-		bottom: 10px;
+		margin: 16px 0px;
 	}
 </style>

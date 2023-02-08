@@ -7,7 +7,9 @@
 <div class="app">
 	<Header />
 
-	<slot />
+	<div class="content">
+		<slot />
+	</div>
 
 	<Footer />
 </div>
@@ -20,5 +22,10 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		justify-content: space-between;
+	}
+
+	.content {
+		flex-grow: 1;
 	}
 </style>
